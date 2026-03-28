@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5004/api/videos";
+const BASE_URL = `${import.meta.env.VITE_BASE_URL}/api/videos`;
 
 const axiosConfig = {
   withCredentials: true,
@@ -25,7 +25,6 @@ export const fetchPopularVideosAPI = async (params) => {
   });
   return response.data; // unwrap here
 };
-
 
 export const fetchVideoAPI = (videoId) =>
   axios.get(`${BASE_URL}/${videoId}`, axiosConfig);
