@@ -59,12 +59,8 @@ function UpdateUser() {
 
   if (!currentUser && loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center p-6">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-          className="h-8 w-8 border-4 border-t-purple-500 border-white/20 rounded-full"
-        />
+      <div className="min-h-screen bg-[#0f0f0f] flex items-center justify-center">
+        <div className="h-8 w-8 border-4 border-t-[#3ea6ff] border-[#272727] rounded-full animate-spin" />
       </div>
     );
   }
@@ -155,29 +151,24 @@ function UpdateUser() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center p-4 sm:p-6">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="bg-white/10 backdrop-blur-lg p-8 sm:p-10 rounded-3xl shadow-2xl max-w-md w-full border border-white/20"
-      >
-        <h2 className="text-xl sm:text-3xl font-bold text-center text-white mb-8 flex items-center justify-center gap-2">
-          <span>🎥 Update Your Profile</span>
+    <div className="min-h-screen bg-[#0f0f0f] flex justify-center py-12 px-4 sm:px-6">
+      <div className="w-full max-w-lg bg-[#0f0f0f] border border-[#272727] p-8 rounded-xl shadow-none">
+        <h2 className="text-2xl font-bold text-[#f1f1f1] mb-8">
+          Update Profile
         </h2>
         <AnimatePresence>
           {error && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="bg-red-500/20 text-red-200 p-4 rounded-lg mb-6 text-center font-medium"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="bg-red-500/10 text-red-400 p-3 rounded mb-6 text-sm"
             >
               {error}
             </motion.div>
           )}
         </AnimatePresence>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <Input
             label="Full Name"
             name="name"
@@ -216,28 +207,28 @@ function UpdateUser() {
             error={errors.password}
             icon={<FaLock />}
           />
-          <div className="relative">
-            <label className="block text-sm font-medium text-white/80 mb-2">
+          <div>
+            <label className="block text-sm font-medium text-[#aaaaaa] mb-1">
               Gender
             </label>
             <select
               name="gender"
               value={formData.gender}
               onChange={handleChange}
-              className={`w-full p-3 rounded-lg bg-white/10 border ${
-                errors.gender ? "border-red-400" : "border-white/20"
-              } text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 placeholder-white/50 transition-all duration-200`}
+              className={`w-full p-3 bg-transparent border ${
+                errors.gender ? "border-red-400" : "border-[#717171]"
+              } text-[#f1f1f1] rounded focus:border-[#3ea6ff] focus:outline-none focus:ring-1 focus:ring-[#3ea6ff]`}
             >
-              <option value="" className="text-gray-900">
+              <option value="" className="bg-[#272727]">
                 Select Gender
               </option>
-              <option value="male" className="text-gray-900">
+              <option value="male" className="bg-[#272727]">
                 Male
               </option>
-              <option value="female" className="text-gray-900">
+              <option value="female" className="bg-[#272727]">
                 Female
               </option>
-              <option value="other" className="text-gray-900">
+              <option value="other" className="bg-[#272727]">
                 Other
               </option>
             </select>
@@ -246,10 +237,10 @@ function UpdateUser() {
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-2">
+            <label className="block text-sm font-medium text-[#aaaaaa] mb-1">
               Profile Picture
             </label>
-            <div className="relative">
+            <div className="flex items-center gap-4 mt-2">
               <input
                 type="file"
                 name="profileImage"
@@ -258,63 +249,48 @@ function UpdateUser() {
                 className="hidden"
                 id="profileImage"
               />
-              <label
-                htmlFor="profileImage"
-                className="flex items-center gap-2 p-3 rounded-lg bg-white/10 border border-white/20 text-white hover:bg-white/20 cursor-pointer transition-all duration-200"
-              >
-                <FaImage className="text-white/80" />
-                <span>{profileImage ? "Change Image" : "Upload Image"}</span>
-              </label>
-            </div>
-            {preview && (
-              <div className="mt-4 flex items-center gap-4">
+              {preview && (
                 <img
                   src={preview}
                   alt="Profile preview"
-                  className="w-16 h-16 rounded-full object-cover border border-white/20"
+                  className="w-12 h-12 rounded-full object-cover"
                   onError={(e) => (e.target.src = "/default-profile.png")}
                 />
+              )}
+              <label
+                htmlFor="profileImage"
+                className="text-sm font-medium text-[#3ea6ff] hover:text-[#65b8ff] cursor-pointer"
+              >
+                {profileImage ? "Change Image" : "Upload Image"}
+              </label>
+              {preview && (
                 <button
                   type="button"
                   onClick={handleRemoveImage}
-                  className="text-red-400 hover:text-red-300 flex items-center gap-1"
+                  className="text-sm text-[#aaaaaa] hover:text-[#f1f1f1]"
                 >
-                  <FaTimes /> Remove
+                  Remove
                 </button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 rounded-lg bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold shadow-lg hover:from-purple-700 hover:to-pink-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? (
-              <span className="flex items-center justify-center gap-2">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                  className="h-5 w-5 border-2 border-t-white border-white/20 rounded-full"
-                />
-                Updating Profile...
-              </span>
-            ) : (
-              "Update Profile"
-            )}
-          </motion.button>
+          <div className="pt-4 flex items-center justify-end gap-4">
+            <Link
+              to="/user-profile"
+              className="text-[#f1f1f1] font-medium text-sm hover:text-[#aaaaaa] px-4 py-2"
+            >
+              Cancel
+            </Link>
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-[#3ea6ff] text-[#0f0f0f] font-medium text-sm px-5 py-2 rounded-full hover:bg-[#65b8ff] disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? "Saving..." : "Save"}
+            </button>
+          </div>
         </form>
-        <Link
-          to="/user-profile"
-          className="flex items-center justify-center gap-2 mt-6 text-white/80 hover:text-purple-400 transition-colors duration-200"
-        >
-          <span>Back to Profile</span>
-          <span className="text-purple-400 font-medium hover:underline">
-            Cancel
-          </span>
-        </Link>
-      </motion.div>
+      </div>
     </div>
   );
 }
@@ -322,20 +298,20 @@ function UpdateUser() {
 export default UpdateUser;
 
 const Input = ({ label, type = "text", error, icon, ...props }) => (
-  <div className="relative">
-    <label className="block text-sm font-medium text-white/80 mb-2">
+  <div>
+    <label className="block text-sm font-medium text-[#aaaaaa] mb-1">
       {label}
     </label>
     <div className="relative">
-      <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/80">
+      <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#aaaaaa]">
         {icon}
       </span>
       <input
         type={type}
         {...props}
-        className={`w-full p-3 pl-10 rounded-lg bg-white/10 border ${
-          error ? "border-red-400" : "border-white/20"
-        } text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 placeholder-white/50 transition-all duration-200`}
+        className={`w-full p-3 pl-10 bg-transparent border ${
+          error ? "border-red-400" : "border-[#717171]"
+        } text-[#f1f1f1] rounded focus:border-[#3ea6ff] focus:outline-none focus:ring-1 focus:ring-[#3ea6ff] placeholder-[#717171]`}
         placeholder={props.placeholder}
       />
     </div>

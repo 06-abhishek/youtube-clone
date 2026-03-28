@@ -65,12 +65,8 @@ const UserProfile = () => {
 
   if (loading || (!currentUser && !error)) {
     return (
-      <div className="flex justify-center items-center h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 1 }}
-          className="h-8 w-8 border-4 border-t-purple-500 border-white/20 rounded-full"
-        />
+      <div className="flex justify-center items-center h-screen bg-[#0f0f0f]">
+        <div className="h-8 w-8 border-4 border-t-[#3ea6ff] border-[#272727] rounded-full animate-spin" />
       </div>
     );
   }
@@ -81,113 +77,75 @@ const UserProfile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white p-4 sm:p-6">
-      <div className="max-w-4xl mx-auto">
-        {/* Error Message */}
+    <div className="min-h-screen bg-[#0f0f0f] text-[#f1f1f1]">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-8">
         <AnimatePresence>
           {error && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="mb-6 p-4 bg-red-500/20 text-red-200 rounded-lg text-center font-medium backdrop-blur-lg border border-white/20"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="mb-6 p-4 bg-[#272727] text-red-400 rounded-lg text-sm"
             >
               {error}
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* User Details Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6 border border-white/20 shadow-xl"
-        >
+        {/* Channel Header */}
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-10 pb-10 border-b border-[#272727]">
           <img
             src={currentUser.profileImage}
             alt="Profile"
-            className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-purple-500/50 shadow-md"
+            className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover"
             onError={(e) => (e.target.src = "/default-profile.png")}
           />
-          <div className="text-center sm:text-left">
-            <h1 className="text-2xl sm:text-3xl font-bold text-white">
+          <div className="text-center sm:text-left flex-1 mt-4 sm:mt-0">
+            <h1 className="text-3xl sm:text-4xl font-bold mb-1">
               {currentUser.name || "N/A"}
             </h1>
-            <p className="text-white/80">@{currentUser.username || "N/A"}</p>
-            <p className="text-white/80">
-              Joined: {formatJoinDate(currentUser.createdAt)}
-            </p>
-          </div>
-        </motion.div>
+            <div className="text-[#aaaaaa] text-sm flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-4">
+              <span>@{currentUser.username || "N/A"}</span>
+              <span className="hidden sm:inline">•</span>
+              <span>Joined {formatJoinDate(currentUser.createdAt)}</span>
+            </div>
 
-        {/* Account and Creator Sections */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Account Section */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 sm:p-8 border border-white/20 shadow-xl"
-          >
-            <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">
-              Account
-            </h2>
-            <div className="grid grid-cols-1 gap-4">
+            <div className="flex flex-wrap justify-center sm:justify-start gap-3 mt-4">
               <Link
                 to={`/update-user/${currentUser._id}`}
-                className="flex items-center gap-3 p-4 bg-white/10 rounded-lg hover:bg-purple-500/20 hover:text-purple-300 transition-all duration-300 border border-white/20"
+                className="flex items-center gap-2 px-4 py-2 bg-[#272727] hover:bg-[#3f3f3f] rounded-full text-sm font-medium transition-colors"
               >
-                <FaUserEdit className="text-lg" />
-                <span>Edit Profile</span>
+                <FaUserEdit /> Edit profile
+              </Link>
+              <Link
+                to="/upload-video"
+                className="flex items-center gap-2 px-4 py-2 bg-[#272727] hover:bg-[#3f3f3f] rounded-full text-sm font-medium transition-colors"
+              >
+                <FaUpload /> Upload video
               </Link>
               <button
                 onClick={handleLogout}
                 disabled={loading}
-                className={`flex items-center gap-3 p-4 bg-white/10 rounded-lg transition-all duration-300 text-left border border-white/20 ${
-                  loading
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:bg-purple-500/20 hover:text-purple-300"
-                }`}
+                className="flex items-center gap-2 px-4 py-2 bg-[#272727] hover:bg-[#3f3f3f] rounded-full text-sm font-medium transition-colors disabled:opacity-50"
               >
-                <FaSignOutAlt className="text-lg" />
-                <span>{loading ? "Logging out..." : "Logout"}</span>
-              </button>
-              <button
-                onClick={handleDeleteAccount}
-                disabled={loading}
-                className={`flex items-center gap-3 p-4 bg-white/10 rounded-lg transition-all duration-300 text-left border border-white/20 ${
-                  loading
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:bg-red-500/20 hover:text-red-300"
-                }`}
-              >
-                <FaTrashAlt className="text-lg" />
-                <span>{loading ? "Deleting..." : "Delete Account"}</span>
+                <FaSignOutAlt /> {loading ? "..." : "Logout"}
               </button>
             </div>
-          </motion.div>
+          </div>
+        </div>
 
-          {/* Creator Section */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 sm:p-8 border border-white/20 shadow-xl"
+        {/* Danger Zone */}
+        <div className="mt-12">
+          <h2 className="text-lg font-medium text-[#f1f1f1] mb-4">
+            Account Management
+          </h2>
+          <button
+            onClick={handleDeleteAccount}
+            disabled={loading}
+            className="flex items-center gap-2 px-4 py-2 border border-[#717171] hover:bg-red-500/10 hover:border-red-500 text-red-500 rounded-full text-sm font-medium transition-all"
           >
-            <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4">
-              Creator
-            </h2>
-            <div className="grid grid-cols-1 gap-4">
-              <Link
-                to="/upload-video"
-                className="flex items-center gap-3 p-4 bg-white/10 rounded-lg hover:bg-purple-500/20 hover:text-purple-300 transition-all duration-300 border border-white/20"
-              >
-                <FaUpload className="text-lg" />
-                <span>Upload Video</span>
-              </Link>
-            </div>
-          </motion.div>
+            <FaTrashAlt /> {loading ? "Deleting..." : "Delete Channel"}
+          </button>
         </div>
       </div>
     </div>

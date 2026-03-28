@@ -13,58 +13,50 @@ const Library = () => {
   const location = useLocation();
   const { currentUser, loading, error } = useSelector((state) => state.user);
 
-  // Fetch user data on mount or when navigating back from VideoPlayer
   useEffect(() => {
     dispatch(fetchCurrentUser()).catch(() => {
       toast.error("Failed to load library. Please try again.");
     });
-  }, [dispatch, location.pathname]); // Re-fetch when pathname changes
+  }, [dispatch, location.pathname]);
 
-  // Format date for display
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
       year: "numeric",
-      month: "long",
+      month: "short",
       day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
     });
   };
 
-  // Handle retry on error
   const handleRetry = () => {
     dispatch(fetchCurrentUser());
   };
 
-  // Loading skeleton for cards
   const renderSkeleton = () => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {[...Array(6)].map((_, index) => (
-        <div
-          key={index}
-          className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 shadow-lg"
-        >
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {[...Array(8)].map((_, index) => (
+        <div key={index} className="flex flex-col gap-2">
           <Skeleton
-            height={160}
+            height={180}
             width="100%"
-            baseColor="#ffffff1a"
-            highlightColor="#ffffff33"
+            baseColor="#272727"
+            highlightColor="#3f3f3f"
+            borderRadius="0.75rem"
           />
-          <div className="p-4">
+          <div>
             <Skeleton
               height={20}
-              width="80%"
-              baseColor="#ffffff1a"
-              highlightColor="#ffffff33"
-              className="mb-2"
+              width="90%"
+              baseColor="#272727"
+              highlightColor="#3f3f3f"
+              className="mb-1"
             />
             <Skeleton
               height={16}
               width="60%"
-              baseColor="#ffffff1a"
-              highlightColor="#ffffff33"
+              baseColor="#272727"
+              highlightColor="#3f3f3f"
             />
           </div>
         </div>
@@ -72,38 +64,37 @@ const Library = () => {
     </div>
   );
 
-  // Render video card
   const renderVideoCard = (item, type) => (
     <motion.li
       key={item._id}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-shadow duration-300"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2 }}
+      className="group cursor-pointer"
     >
       <Link
         to={`/video/${item.videoId._id}`}
         className="block"
         aria-label={`View video: ${item.videoId.title || "Untitled Video"}`}
       >
-        <div className="relative">
+        <div className="relative mb-2">
           <img
             src={item.videoId.thumbnailUrl || "/default-thumbnail.png"}
             alt={item.videoId.title || "Untitled Video"}
-            className="w-full h-40 object-cover rounded-t-2xl"
+            className="w-full aspect-video object-cover rounded-xl transition-transform duration-200 group-hover:rounded-none"
             loading="lazy"
             onError={(e) => (e.target.src = "/default-thumbnail.png")}
           />
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50">
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/40">
             <FaPlayCircle className="text-white text-4xl" />
           </div>
         </div>
-        <div className="p-4">
-          <h3 className="text-base font-semibold text-white truncate">
+        <div className="pr-6">
+          <h3 className="text-[#f1f1f1] text-base font-semibold line-clamp-2 leading-tight">
             {item.videoId.title || "Untitled Video"}
           </h3>
-          <p className="text-white/80 text-xs mt-1">
-            {type === "liked" ? "Liked" : "Saved"}:{" "}
+          <p className="text-[#aaaaaa] text-sm mt-1">
+            {type === "liked" ? "Liked" : "Saved"} •{" "}
             {formatDate(type === "liked" ? item.likedAt : item.savedAt)}
           </p>
         </div>
@@ -111,94 +102,83 @@ const Library = () => {
     </motion.li>
   );
 
-  // Main render
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white p-4 sm:p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Library Heading */}
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-3xl sm:text-4xl font-bold mb-8 flex items-center gap-2"
-        >
-          <span>🎥 Your  Library</span>
-        </motion.h1>
+    <div className="min-h-screen bg-[#0f0f0f] text-[#f1f1f1] p-4 sm:p-6 lg:px-8">
+      <div className="max-w-[1600px] mx-auto">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-8 flex items-center gap-2">
+          Library
+        </h1>
 
-        {/* Error Message */}
         <AnimatePresence>
           {error && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="mb-8 p-4 bg-red-500/20 text-red-200 rounded-lg flex items-center justify-between border border-white/20"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="mb-8 p-4 bg-[#272727] text-red-400 rounded-lg flex items-center justify-between"
             >
               <span>{error}</span>
               <button
                 onClick={handleRetry}
-                className="flex items-center gap-2 px-3 py-1 bg-red-500/30 rounded hover:bg-red-500/50 transition-colors duration-200"
-                aria-label="Retry loading library"
+                className="flex items-center gap-2 px-4 py-2 bg-red-500/10 hover:bg-red-500/20 rounded-full transition-colors font-medium"
               >
-                <FaRedo />
-                Retry
+                <FaRedo /> Retry
               </button>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Loading State */}
         {loading && !currentUser ? (
           renderSkeleton()
         ) : (
-          <div className="space-y-12">
-            {/* Liked Videos Section */}
+          <div className="space-y-10">
             <div>
-              <h2 className="text-2xl font-semibold text-white mb-4">
+              <h2 className="text-xl font-bold text-[#f1f1f1] mb-4">
                 Liked Videos
               </h2>
               {currentUser?.likedVideos?.length > 0 ? (
-                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8">
                   {currentUser.likedVideos.map((item) =>
                     item.videoId && typeof item.videoId === "object" ? (
                       renderVideoCard(item, "liked")
                     ) : (
                       <li
                         key={item._id}
-                        className="p-4 bg-white/10 rounded-lg text-white/80 border border-white/20"
+                        className="p-4 bg-[#272727] rounded-xl text-[#aaaaaa]"
                       >
-                        Invalid video data (ID: {item.videoId})
+                        Unavailable video
                       </li>
                     )
                   )}
                 </ul>
               ) : (
-                <p className="text-white/80">No liked videos yet.</p>
+                <p className="text-[#aaaaaa] text-sm">No liked videos yet.</p>
               )}
             </div>
 
-            {/* Saved Videos Section */}
+            <hr className="border-[#272727]" />
+
             <div>
-              <h2 className="text-2xl font-semibold text-white mb-4">
+              <h2 className="text-xl font-bold text-[#f1f1f1] mb-4">
                 Saved Videos
               </h2>
               {currentUser?.savedVideos?.length > 0 ? (
-                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8">
                   {currentUser.savedVideos.map((item) =>
                     item.videoId && typeof item.videoId === "object" ? (
                       renderVideoCard(item, "saved")
                     ) : (
                       <li
                         key={item._id}
-                        className="p-4 bg-white/10 rounded-lg text-white/80 border border-white/20"
+                        className="p-4 bg-[#272727] rounded-xl text-[#aaaaaa]"
                       >
-                        Invalid video data (ID: {item.videoId})
+                        Unavailable video
                       </li>
                     )
                   )}
                 </ul>
               ) : (
-                <p className="text-white/80">No saved videos yet.</p>
+                <p className="text-[#aaaaaa] text-sm">No saved videos yet.</p>
               )}
             </div>
           </div>

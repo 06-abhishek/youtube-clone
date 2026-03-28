@@ -1,16 +1,12 @@
 import React from "react";
-
 import VideoCardGrid from "../../components/VideoCardGrid";
-
 import { fetchPopularVideos } from "../../store/Slices/videoSlice";
 
 const PopularVideoCardGrid = () => {
-
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900  to-slate-800">
+    <div className="w-full bg-[#0f0f0f] text-[#f1f1f1]">
       <VideoCardGrid
-        title="🆕 Popular Videos"
+        title="Popular Videos"
         thunk={() => fetchPopularVideos({ limit: 8 })}
         selector={(state) => ({
           items: state.video.popularVideos || [],
@@ -18,7 +14,7 @@ const PopularVideoCardGrid = () => {
           error: state.video.error || null,
         })}
         linkPrefix="/video"
-        className="py-12"
+        className="py-6 px-4 sm:px-6 lg:px-8"
       />
     </div>
   );
