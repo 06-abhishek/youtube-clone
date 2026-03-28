@@ -8,19 +8,25 @@ import userRouter from "./routes/user.route.js";
 import videosRouter from "./routes/video.route.js";
 
 const app = express();
-
 dotenv.config();
-const allowedOrigins = ["http://localhost:5173", process.env.CLIENT_BASE_URL];
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.CLIENT_BASE_URL, // from Render env
+].filter(Boolean); // removes undefined/null
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true); // allow non-browser tools
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = "CORS policy does not allow this origin.";
-        return callback(new Error(msg), false);
+    origin: (origin, callback) => {
+      // Allow tools like Postman / server-to-server
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
       }
-      return callback(null, true);
+
+      console.log("Blocked by CORS:", origin); // VERY IMPORTANT for debugging
+      return callback(null, false); // do NOT throw error
     },
     credentials: true,
   })
