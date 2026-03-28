@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signupUser, reset } from "../../store/Slices/userSlice";
+import { signupUser, reset } from "../../store/slices/userSlice";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import { FaUser, FaEnvelope, FaLock, FaImage, FaTimes } from "react-icons/fa";

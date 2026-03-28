@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser, fetchCurrentUser } from "../../store/Slices/userSlice";
+import { updateUser, fetchCurrentUser } from "../../store/slices/userSlice";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaUser, FaEnvelope, FaLock, FaImage, FaTimes } from "react-icons/fa";

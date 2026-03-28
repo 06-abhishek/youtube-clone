@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../store/Slices/userSlice";
+import { logoutUser } from "../store/slices/userSlice";
 import { FaSearch, FaUserCircle, FaSignOutAlt, FaBars } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import Youtube from "../assets/Youtube Logo.png";

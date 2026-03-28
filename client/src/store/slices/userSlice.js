@@ -35,7 +35,7 @@ export const fetchCurrentUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await api.fetchCurrentUser();
-     
+
       return res.data.user;
     } catch (err) {
       return rejectWithValue(
@@ -145,7 +145,6 @@ const userSlice = createSlice({
         state.error = action.payload;
       })
 
-      
       // Logout
       .addCase(logoutUser.fulfilled, (state) => {
         state.currentUser = null;

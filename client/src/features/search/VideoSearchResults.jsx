@@ -4,7 +4,7 @@ import { useLocation, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { fetchAllVideos } from "../../store/Slices/videoSlice";
+import { fetchAllVideos } from "../../store/slices/videoSlice";
 
 const VideoSearchResults = () => {
   const dispatch = useDispatch();

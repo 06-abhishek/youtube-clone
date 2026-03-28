@@ -7,7 +7,7 @@ import {
   fetchCurrentUser,
   logoutUser,
   deleteUser,
-} from "../../store/Slices/userSlice";
+} from "../../store/slices/userSlice";
 import { toast } from "react-toastify";
 
 const UserProfile = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCurrentUser } from "../../store/Slices/userSlice";
+import { fetchCurrentUser } from "../../store/slices/userSlice";
 import { Link, useLocation } from "react-router-dom";
 import { FaRedo, FaPlayCircle } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaVideo, FaImage, FaTimes, FaTag } from "react-icons/fa";
-import { uploadVideo } from "../../store/Slices/videoSlice";
+import { uploadVideo } from "../../store/slices/videoSlice";
 
 const UploadVideo = () => {
   const dispatch = useDispatch();

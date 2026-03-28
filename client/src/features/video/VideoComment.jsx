@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addComment } from "../../store/Slices/videoSlice";
+import { addComment } from "../../store/slices/videoSlice";
 import { motion, AnimatePresence } from "framer-motion";
 
 const VideoComment = ({ videoId }) => {

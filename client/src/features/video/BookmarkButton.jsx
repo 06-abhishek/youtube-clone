@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleBookmark } from "../../store/Slices/videoSlice";
+import { toggleBookmark } from "../../store/slices/videoSlice";
 import { motion } from "framer-motion";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { toast } from "react-toastify";

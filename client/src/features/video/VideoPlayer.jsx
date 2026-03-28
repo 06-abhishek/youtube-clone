@@ -17,7 +17,7 @@ import {
 import LikeButton from "./LikeButton";
 import BookmarkButton from "./BookmarkButton";
 import VideoComment from "./VideoComment";
-import { fetchVideo, updateVideoAsViewed } from "../../store/Slices/videoSlice";
+import { fetchVideo, updateVideoAsViewed } from "../../store/slices/videoSlice";
 
 const VideoPlayer = () => {
   const { id } = useParams();

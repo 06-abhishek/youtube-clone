@@ -3,13 +3,13 @@ import { useDispatch } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./AppRoutes";
 import { ToastContainer } from "react-toastify";
-import { fetchCurrentUser } from "../store/Slices/userSlice";
+import { fetchCurrentUser } from "../store/slices/userSlice";
 
 export default function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCurrentUser()); 
+    dispatch(fetchCurrentUser());
   }, [dispatch]);
 
   return (

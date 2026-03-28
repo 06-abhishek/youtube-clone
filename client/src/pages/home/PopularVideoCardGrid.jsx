@@ -1,6 +1,6 @@
 import React from "react";
 import VideoCardGrid from "../../components/VideoCardGrid";
-import { fetchPopularVideos } from "../../store/Slices/videoSlice";
+import { fetchPopularVideos } from "../../store/slices/videoSlice";
 
 const PopularVideoCardGrid = () => {
   return (
