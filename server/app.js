@@ -10,23 +10,25 @@ import videosRouter from "./routes/video.route.js";
 const app = express();
 dotenv.config();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  process.env.CLIENT_BASE_URL, // from Render env
-].filter(Boolean); // removes undefined/null
+const allowedHosts = ["localhost", "youtube-clone-client-alpha.vercel.app"];
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow tools like Postman / server-to-server
       if (!origin) return callback(null, true);
 
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
+      try {
+        const { hostname } = new URL(origin);
 
-      console.log("Blocked by CORS:", origin); // VERY IMPORTANT for debugging
-      return callback(null, false); // do NOT throw error
+        if (allowedHosts.includes(hostname)) {
+          return callback(null, true);
+        }
+
+        console.log("Blocked by CORS:", origin);
+        return callback(null, false);
+      } catch (err) {
+        return callback(null, false);
+      }
     },
     credentials: true,
   })
